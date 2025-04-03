@@ -96,7 +96,7 @@ WSGI_APPLICATION = 'winespa.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite///db.slite3',
+        default='sqlite:///db.sqlite3',  # Corregido de 'sqlite///db.slite3'
         conn_max_age=600
     )
 }
@@ -136,11 +136,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Añadido para corregir el error
 
 if not DEBUG:
-    STATIC_URL = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressendManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # Error tipográfico corregido
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
