@@ -8,8 +8,8 @@ class ServicioSerializer(serializers.ModelSerializer):
         
 class VentaServicioSerializer(serializers.ModelSerializer):
     
-    # Relación por ID
-    servicio = serializers.PrimaryKeyRelatedField(queryset=Servicio.objects.all())  
+    
+    servicio = ServicioSerializer() 
      
     class Meta:
         model = VentaServicio
