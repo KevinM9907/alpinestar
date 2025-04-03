@@ -11,9 +11,6 @@ class InsumoSerializer(serializers.ModelSerializer):
     # Solo lectura en GET
     categoria_insumo = CategoriaInsumoSerializer(read_only=True)  
     
-    # Para POST y PUT
-    categoria_insumo_id = serializers.PrimaryKeyRelatedField(
-        queryset=CategoriaInsumo.objects.all(), source="categoria_insumo", write_only=True)  
     
     class Meta: 
         model = Insumo

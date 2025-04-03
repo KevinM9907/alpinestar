@@ -9,3 +9,7 @@ class Proveedor(models.Model):
     estado = models.BooleanField()
     tipo_persona = models.CharField(max_length=45)
     celular =  models.CharField(max_length=10)
+    
+    
+    def __str__(self):
+        return self.nombre

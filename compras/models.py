@@ -8,6 +8,8 @@ class Compra(models.Model):
     fecha_compra = models.DateField()
     total = models.FloatField()
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    
+    
 
 class CompraHasInsumo(models.Model):
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
