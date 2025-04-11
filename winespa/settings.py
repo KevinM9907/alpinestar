@@ -57,7 +57,8 @@ INSTALLED_APPS = [
     'semanas',
     'servicios',
     'usuarios',
-    'rest_framework'
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -75,8 +76,14 @@ MIDDLEWARE = [
 
 # Permite todas las conexiones desde flutter 
 CORS_ALLW_ALL_ORIGINS = [
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:8000",
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 
 ROOT_URLCONF = 'winespa.urls'
 
@@ -154,3 +161,5 @@ if not DEBUG:
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
