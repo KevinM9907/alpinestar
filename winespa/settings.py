@@ -75,7 +75,7 @@ MIDDLEWARE = [
 
 # Permite todas las conexiones desde flutter 
 CORS_ALLW_ALL_ORIGINS = [
-    "http://localhost:8080"
+    "http://127.0.0.1:8000"
 ]
 
 ROOT_URLCONF = 'winespa.urls'
