@@ -77,9 +77,7 @@ MIDDLEWARE = [
 ]
 
 # Permite todas las conexiones desde flutter 
-CORS_ALLW_ALL_ORIGINS = [
-    "http://127.0.0.1:8000",
-]
+CORS_ALLW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
