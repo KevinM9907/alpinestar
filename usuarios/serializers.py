@@ -98,11 +98,6 @@ class UsuarioSerializer(UsuarioBaseSerializer):
         source='rol',
         write_only=True
     )
-    groups = serializers.PrimaryKeyRelatedField(
-        queryset=Group.objects.all(),
-        many=True,
-        required=False
-    )
     user_permissions = serializers.PrimaryKeyRelatedField(
         queryset=Permission.objects.all(),
         many=True,
