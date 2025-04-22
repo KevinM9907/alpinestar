@@ -12,7 +12,7 @@ class AuthBaseView(APIView):
 class LoginView(AuthBaseView):
     def post(self, request):
         serializer = AccesoSerializer(data=request.data)
-        
+
         if not serializer.is_valid():
             return Response(
                 {
@@ -24,7 +24,7 @@ class LoginView(AuthBaseView):
 
         usuario = serializer.validated_data['usuario']
         refresh = RefreshToken.for_user(usuario)
-        
+
         return Response({
             'mensaje': 'Login exitoso',
             'usuario': {
@@ -41,7 +41,7 @@ class LoginView(AuthBaseView):
 class RegistroView(AuthBaseView):
     def post(self, request):
         serializer = RegistroSerializer(data=request.data)
-        
+
         if not serializer.is_valid():
             return Response(
                 {
@@ -52,10 +52,8 @@ class RegistroView(AuthBaseView):
             )
 
         usuario = serializer.save()
-        
-        # Opcional: generar token automáticamente después del registro
         refresh = RefreshToken.for_user(usuario)
-        
+
         return Response({
             'mensaje': 'Usuario registrado exitosamente',
             'usuario': {
@@ -71,32 +69,17 @@ class RegistroView(AuthBaseView):
 
 class UsuarioViewSet(viewsets.ModelViewSet):
     serializer_class = UsuarioSerializer
-    queryset = Usuario.objects.none()  # Por defecto vacío, se sobrescribe en get_queryset
+    queryset = Usuario.objects.none()  # Por defecto vacío
 
     def get_permissions(self):
-        if self.action in ['create']:
+        if self.action == 'create':
             return [permissions.AllowAny()]
-        return [permissions.IsAuthenticated()]
+        return super().get_permissions()
 
     def get_queryset(self):
         user = self.request.user
-        
-        if user.is_superuser:
+        if user.is_authenticated and user.is_superuser:
             return Usuario.objects.all()
         elif user.is_authenticated:
             return Usuario.objects.filter(id=user.id)
         return Usuario.objects.none()
-
-    def perform_create(self, serializer):
-        # Hashear la contraseña al crear el usuario
-        usuario = serializer.save()
-        if 'password' in serializer.validated_data:
-            usuario.set_password(serializer.validated_data['password'])
-            usuario.save()
-
-    def perform_update(self, serializer):
-        # Hashear la contraseña si se actualiza
-        usuario = serializer.save()
-        if 'password' in serializer.validated_data:
-            usuario.set_password(serializer.validated_data['password'])
-            usuario.save()
