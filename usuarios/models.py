@@ -22,6 +22,9 @@ class RolHasPermiso(models.Model):
     class Meta:
         unique_together = ('rol', 'permiso')
 
+    def __str__(self):
+        return f"{self.rol} - {self.permiso}"
+
 class UsuarioManager(BaseUserManager):
     def create_user(self, correo, password=None, **extra_fields):
         if not correo:
@@ -53,19 +56,19 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     correo = models.EmailField(max_length=45, unique=True)
     estado = models.BooleanField(default=True)
     rol = models.ForeignKey(Rol, on_delete=models.PROTECT)
-    
-    # Campos requeridos para el admin
+
+    # Requerido para el admin
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
-    
+
     USERNAME_FIELD = 'correo'
     REQUIRED_FIELDS = ['celular', 'rol']
-    
+
     objects = UsuarioManager()
-    
+
     def __str__(self):
         return self.correo
-    
+
     class Meta:
         verbose_name = 'Usuario'
         verbose_name_plural = 'Usuarios'

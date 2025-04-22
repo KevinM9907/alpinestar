@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import Group, Permission
+from django.contrib.auth.models import Permission
 from .models import Usuario, Rol, Permiso, RolHasPermiso
 
 class PermisoSerializer(serializers.ModelSerializer):
@@ -98,11 +98,6 @@ class UsuarioSerializer(UsuarioBaseSerializer):
         source='rol',
         write_only=True
     )
-    user_permissions = serializers.PrimaryKeyRelatedField(
-        queryset=Permission.objects.all(),
-        many=True,
-        required=False
-    )
 
     def update(self, instance, validated_data):
         if 'password' in validated_data:
@@ -110,4 +105,4 @@ class UsuarioSerializer(UsuarioBaseSerializer):
         return super().update(instance, validated_data)
 
     class Meta(UsuarioBaseSerializer.Meta):
-        fields = UsuarioBaseSerializer.Meta.fields + ['rol', 'rol_id', 'groups', 'user_permissions']
+        fields = UsuarioBaseSerializer.Meta.fields + ['rol', 'rol_id']
