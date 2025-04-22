@@ -2,8 +2,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, viewsets, permissions
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import AccesoSerializer, UsuarioSerializer, RegistroSerializer
-from .models import Usuario
+from .serializers import AccesoSerializer, UsuarioSerializer, RegistroSerializer, RolSerializer
+from .models import Usuario, Rol
 
 class AuthBaseView(APIView):
     """Clase base para vistas de autenticación"""
@@ -83,3 +83,8 @@ class UsuarioViewSet(viewsets.ModelViewSet):
         elif user.is_authenticated:
             return Usuario.objects.filter(id=user.id)
         return Usuario.objects.none()
+
+class RolViewSet(viewsets.ModelViewSet):
+    queryset = Rol.objects.all()
+    serializer_class = RolSerializer
+    permission_classes = [permissions.AllowAny]
